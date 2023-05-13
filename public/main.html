@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="\my.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">   
+    <title>Document</title>
+
+
+    <style>        
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,800;1,400&family=Roboto:ital,wght@0,500;1,300;1,900&display=swap');
+        
+        *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins",sans-serif;
+        }
+        /* body{
+        background-color: black;
+        } */
+        .outercover{
+        color: cyan;
+        width: 400px;
+        height: 550px;
+        align-items: center;
+        text-align: center;
+        background-color: black;
+        opacity: 90%;
+        
+        position: absolute;
+        top:0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        
+        margin: auto;
+        border-radius: 26px;
+        border: 0;
+        box-shadow: 0px 1px 2px rgba(22, 23, 23, 0.5), 
+              0px 2px 4px rgba(22, 23, 23, 0.5), 
+              0px 4px 8px rgba(22, 23, 23, 0.5),  
+              0px 8px 16px rgba(22, 23, 23, 0.5);
+        /* box-shadow: rgba(0, 0, 0, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(2, 8, 14, 0.35) 0px -2px 6px 0px inset; */
+        
+        }
+        
+        .search-box{
+        width: 100%;
+        height: 100%;
+        /* background-color: blue; */
+        padding: 6px 10px;
+        position: absolute;
+        top: 10px;
+        /* align-items: center; */
+        opacity: 0;
+        /* display: none; */
+        }
+        .active{
+        opacity: 100%;
+        z-index: 10;
+        }
+        .active-card{
+        opacity: 40%;
+        z-index: -5550;
+        }
+        .search-box input{
+        width: 100%;
+        height: 8%;
+        border-style: none;
+        outline: none;
+        border-radius: 10px;
+        padding: 6px 28px 6px 10px;
+        
+        }
+        .search-box i{
+        cursor: pointer;
+        position: absolute;
+        top: 20px;
+        right: 18px;
+        }
+        .image i{
+        /* background-color: red;    */
+        position: relative;
+        margin-top: 30px;
+        /* text-align: center;
+        align-items: center; */
+        width: 210px;
+        height: 160px;
+        /* background-image: url("./cloudy.png"); */
+        background-position: center;
+        font-size: 100px;
+        /* color: yellow; */
+        /* background-repeat: no-repeat; */
+        background-size: cover;
+        }
+        .temp{
+            margin-top: -30px;
+        font-size: 80px;
+        font-family: 'Roboto';
+        font-weight: 900;
+        }
+        #date{
+        /* display: flex; */
+        color: grey;
+        font-size: 16px;
+        /* justify-content: center; */
+        /* align-items: center;
+        text-align: center; */
+        }
+        #max-min{
+        color: grey;
+        font-size: 16px;
+        text-align: left;
+        margin-left: 30px;
+        }
+        .nav{
+        width: 93%;
+        height: 12%;
+        position: absolute;  
+        bottom: 0;
+        background-color: rgb(182, 171, 171);
+        border-radius: 15px;
+        margin: 14px;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        padding: 0px 30px;
+        justify-content: space-between;
+        }
+        .nav #i{
+        /* color: rgb(45, 45, 185); */
+        background-color: black;
+        border-radius: 50px;
+        padding: 5px;
+        height: 40px;
+        width: 40px;
+        font-size: 22px;
+        /* text-align: center;
+        align-items: center; */
+        /* font-weight: 6   00; */
+        }
+        #i:hover{
+            /* padding: 4px; */
+            background-color: rgb(196, 196, 196);
+            cursor: pointer;
+        }
+        .nav .special{
+            color: red;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="outercover">
+            <form action="/" method="POST" id="sbox"  class="search-box">
+                <input type="text" id="search-city" placeholder="enter name of city" name="cityy">
+                <i id="close-button" class="fa-regular fa-circle-xmark" color="yellow"></i>
+                <!-- <button type="submit">submit</button> -->
+            </form>
+        <div class="card">
+            <h1> Weather </h1>
+            <div class="location">
+                <h3>{%cityloc%} , {%counloc%}</h3>
+            </div>
+            <div class="image" id="imgs">
+                <i class="fa-solid fa-sun" style="color:red;"></i>
+            </div>
+            <div class="temp"><b>{%tempe%}</b></div>
+            <div id="date">
+                WED | 24NOV23 | 12:02AM
+                <!-- <div class="day"></div>
+                <div class="dt"></div>
+                <div class="time"></div> -->
+            </div>
+            <div id="max-min">
+                MAX - {%maxt%}&deg;C <br> MIN - {%mint%}&deg;C
+            </div>
+            
+            <div class="nav">
+                <div id="i" class="special">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+                <div id="i" class="ns">
+                    <i id = "srch" class="fa-solid fa-magnifying-glass"></i>
+
+                </div>
+                <div id="i">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+                <div id="i">
+                    <i class="fa-regular fa-circle-user"></i>
+                </div>
+        </div>
+    </div>
+    <script>
+        var dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"];
+        const dateo = document.getElementById("date");
+        const tempo = document.getElementById("temp");
+        const search = document.getElementById("search-city");
+        const images = document.getElementById("imgs");
+        // const images = document.getElementsByClassName("image");    
+        const imgstatus = "{%imgstst%}";
+        // console.log(ingstatus);
+        if(imgstatus == 'Sunny'){
+            images.innerHTML = "<i class='fa-solid fa-sun' style='color:yellow;'></i>";
+        }
+        else if(imgstatus == 'Clouds'){
+            images.innerHTML = "<i class='fa-solid fa-cloud'style='color:#f1f2f6;'></i>";
+        }
+        else if(imgstatus == 'Rainy'){
+            images.innerHTML = "<i class='fa-regular fa-cloud-rain' style='color:#a4b0be;'></i>";
+        }
+        else{
+            images.innerHTML = "<i class='fa-solid fa-sun'style='color:#44c3de;''></i>";
+        }
+        const curdate = () => {
+            // console.log("curtime");
+            let now = new Date();
+            let day = dayNames[now.getDay()];
+            let mon = month[now.getMonth() ];
+            let dt = now.getDate();
+            let hrs = now.getHours();
+            let min = now.getMinutes();
+            let sts = "AM";
+            if(hrs > 11){
+                sts = "PM";
+                if(hrs > 12){
+                    hrs = hrs - 12;
+                }
+            }
+            if(min<10){
+                min = "0" + min;
+            }
+            // console.log(day + "|" + dt + mon + "|" + hrs + ":" + min + sts);
+            dateo.innerHTML = day + " | " + dt  + " " + mon + " | " + hrs + ":" + min + sts ; 
+        };
+        curdate();
+
+
+        const givingValCity = (k)=>{
+            console.log(k);
+        }
+
+
+        const test  = document.querySelectorAll("#i");
+        // console.log(test);
+        test.forEach(e=>{
+            e.addEventListener('click',()=>{
+                
+                document.querySelector(".special")?.classList.remove("special");
+                // document.querySelector(".active")?.classList.remove("active");
+                e.classList.add("special");
+                console.log("clicked");
+                
+            })
+        })
+        
+
+        document.querySelector("#srch").addEventListener("click",()=>{
+            document.querySelector(".card").classList.add("active-card");
+            document.querySelector(".search-box").classList.add("active");
+            document.querySelector(".search-box").addEventListener("keydown",(e)=>{
+                if(e.code === "Enter"){
+                    if(search.value != ""){
+                        
+                        givingValCity(search.value);
+                        // $("#popdiv").fadeTo(200,1); 
+                        document.querySelector(".card").classList.remove("active-card");
+                        document.querySelector(".search-box").classList.remove("active");
+                    }
+                }
+            });            
+        })
+
+        document.querySelector("#close-button").addEventListener("click",()=>{
+            document.querySelector(".fa-solid").parentElement.classList.add("special");
+            document.querySelector(".ns").classList.remove("special");
+            document.querySelector(".card").classList.remove("active-card");
+            document.querySelector(".search-box").classList.remove("active");
+        })
+
+    </script>
+</body>
+</html>

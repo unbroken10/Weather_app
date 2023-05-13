@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="\my.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">   
+    <title>Document</title>
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,800;1,400&family=Roboto:ital,wght@0,500;1,300;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins",sans-serif;
+}
+/* body{
+    background-color: black;
+} */
+.outercover{
+    color: cyan;
+    width: 400px;
+    height: 550px;
+    align-items: center;
+    text-align: center;
+    background-color: black;
+    opacity: 90%;
+    
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    margin: auto;
+    border-radius: 26px;
+    border: 0;
+    box-shadow: 0px 1px 2px rgba(22, 23, 23, 0.5), 
+              0px 2px 4px rgba(22, 23, 23, 0.5), 
+              0px 4px 8px rgba(22, 23, 23, 0.5),  
+              0px 8px 16px rgba(22, 23, 23, 0.5);
+    /* box-shadow: rgba(0, 0, 0, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(2, 8, 14, 0.35) 0px -2px 6px 0px inset; */
+
+}
+
+.search-box{
+    width: 100%;
+    height: 10%;
+    /* background-color: blue; */
+    padding: 6px 10px;
+    position: absolute;
+    top: 10px;
+    /* align-items: center; */
+    opacity: 0;
+    /* display: none; */
+}
+.active{
+    opacity: 100%;
+    z-index: 10;
+}
+.active-card{
+    opacity: 40%;
+    z-index: -1;
+}
+.search-box input{
+    width: 100%;
+    height: 100%;
+    border-style: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 6px 28px 6px 10px;
+    
+}
+.search-box i{
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 18px;
+}
+.image{
+    /* background-color: red;    */
+    position: relative;
+    margin: auto;
+    /* text-align: center;
+    align-items: center; */
+    width: 210px;
+    height: 160px;
+  background-image: url("./cloudy.png");
+  background-position: center;
+  /* background-repeat: no-repeat; */
+  background-size: cover;
+}
+.temp{
+    font-size: 80px;
+    font-family: 'Roboto';
+    font-weight: 900;
+}
+#date{
+    /* display: flex; */
+    color: grey;
+    font-size: 16px;
+    /* justify-content: center; */
+    /* align-items: center;
+    text-align: center; */
+}
+#max-min{
+    color: grey;
+    font-size: 16px;
+    text-align: left;
+    margin-left: 30px;
+}
+.nav{
+    width: 93%;
+    height: 12%;
+    position: absolute;  
+    bottom: 0;
+    background-color: rgb(182, 171, 171);
+    border-radius: 15px;
+    margin: 14px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+}
+.nav i{
+    color: rgb(45, 45, 185);
+    padding: 0px 30px;
+    font-size: 22px;
+    /* font-weight: 6   00; */
+}
+
+    </style>
+</head>
+<body>
+    <div class="outercover">
+        <div id="sbox"  class="search-box">
+            <input type="text" id="search-city" placeholder="enter name of city">
+            <i id="close-button" class="fa-regular fa-circle-xmark"></i>
+        </div>
+        <div class="card">
+            <h1> Weather </h1>
+            <div class="location">
+                <h3>{%cityloc%} , {%counloc%}</h3>
+            </div>
+            <div class="image"></div>
+            <div class="temp"><b>{%tempe%}</b></div>
+            <div id="date">
+                WED | 24NOV23 | 12:02AM
+                <!-- <div class="day"></div>
+                <div class="dt"></div>
+                <div class="time"></div> -->
+            </div>
+            <div id="max-min">
+                MAX - {%maxt%}&deg;C <br> MIN - {%mint%}&deg;C
+            </div>
+            <div class="nav">
+                <i class="fa-solid fa-house"></i>
+                <i id = "srch" class="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-solid fa-circle-info"></i>
+                <i class="fa-regular fa-circle-user"></i>
+            </div>
+        </div>
+    </div>
+    <script>
+        var dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"];
+        const dateo = document.getElementById("date");
+        const tempo = document.getElementById("temp");
+        const search = document.getElementById("search-city");
+        
+
+        const curdate = () => {
+            // console.log("curtime");
+            let now = new Date();
+            let day = dayNames[now.getDay()];
+            let mon = month[now.getMonth() ];
+            let dt = now.getDate();
+            let hrs = now.getHours();
+            let min = now.getMinutes();
+            let sts = "AM";
+            if(hrs > 11){
+                sts = "PM";
+                if(hrs > 12){
+                    hrs = hrs - 12;
+                }
+            }
+            // console.log(day + "|" + dt + mon + "|" + hrs + ":" + min + sts);
+            dateo.innerHTML = day + " | " + dt  + " " + mon + " | " + hrs + ":" + min + sts ; 
+        };
+        curdate();
+
+
+        const givingValCity = (k)=>{
+            console.log(k);
+        }
+
+
+        document.querySelector("#srch").addEventListener("click",()=>{
+            document.querySelector(".card").classList.add("active-card");
+            document.querySelector(".search-box").classList.add("active");
+            document.querySelector(".search-box").addEventListener("keydown",(e)=>{
+                if(e.code === "Enter"){
+                    if(search.value != ""){
+                        
+                        givingValCity(search.value);
+                        document.querySelector(".card").classList.remove("active-card");
+                        document.querySelector(".search-box").classList.remove("active");
+                    }
+                }
+            });            
+        })
+
+        document.querySelector("#close-button").addEventListener("click",()=>{
+            document.querySelector(".card").classList.remove("active-card");
+            document.querySelector(".search-box").classList.remove("active");
+        })
+
+    </script>
+</body>
+</html>
